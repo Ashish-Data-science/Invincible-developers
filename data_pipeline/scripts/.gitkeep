@@ -1,0 +1,6 @@
+# Drop individual processing scripts here.
+# Each script should expose a run(output_dir) function.
+# Examples:
+#   process_auction_data.py  — cleans raw CSVs, outputs auction_summary.json
+#   compute_team_spend.py    — aggregates spend by team/role
+#   player_value_index.py    — computes value-for-money index per player

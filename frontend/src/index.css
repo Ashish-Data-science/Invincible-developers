@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-ipl-dark text-white font-sans;
+  }
+}
+
+@layer components {
+  /* Reusable glassmorphism card */
+  .glass-card {
+    @apply bg-ipl-card border border-white/10 rounded-2xl shadow-xl backdrop-blur-sm;
+  }
+
+  /* Gradient heading */
+  .gradient-text {
+    @apply bg-gradient-to-r from-ipl-gold via-yellow-300 to-ipl-accent bg-clip-text text-transparent;
+  }
+
+  /* Section container */
+  .section {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12;
+  }
+}

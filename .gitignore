@@ -1,0 +1,17 @@
+# Node
+frontend/node_modules/
+frontend/dist/
+
+# Python
+data_pipeline/__pycache__/
+data_pipeline/*.pyc
+data_pipeline/raw_data/*.csv
+data_pipeline/raw_data/*.xlsx
+
+# Env
+.env
+.env.local
+
+# OS
+.DS_Store
+Thumbs.db

@@ -1,0 +1,6 @@
+# Drop raw CSVs / Excel files here.
+# These files are NOT committed to git (see .gitignore).
+# Add your IPL auction data files here:
+#   ipl_auction_2024.csv
+#   player_stats.xlsx
+#   team_budgets.csv
