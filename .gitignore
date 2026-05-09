@@ -4,7 +4,9 @@ frontend/dist/
 
 # Python
 data_pipeline/__pycache__/
+data_pipeline/**/__pycache__/
 data_pipeline/*.pyc
+data_pipeline/**/*.pyc
 data_pipeline/raw_data/*.csv
 data_pipeline/raw_data/*.xlsx
 
