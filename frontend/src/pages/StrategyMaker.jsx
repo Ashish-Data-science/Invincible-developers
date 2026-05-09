@@ -86,7 +86,7 @@ export default function StrategyMaker() {
 
   // Load players
   useEffect(() => {
-    fetch(`${import.meta.env.BASE_URL}data/players.json`)
+    fetch(`http://localhost:8000/api/players`)
       .then(r => r.json())
       .then(setPlayers)
       .catch(() => setPlayers([]))

@@ -27,13 +27,12 @@ export default function AdminDashboard() {
   const [players, setPlayers]           = useState([])
 
   useEffect(() => {
-    const base = import.meta.env.BASE_URL
     Promise.all([
-      fetch(`${base}data/team_spend.json`).then(r => r.json()),
-      fetch(`${base}data/auction_summary.json`).then(r => r.json()),
-      fetch(`${base}data/role_distribution.json`).then(r => r.json()),
-      fetch(`${base}data/price_vs_performance.json`).then(r => r.json()),
-      fetch(`${base}data/players.json`).then(r => r.json()),
+      fetch(`http://localhost:8000/api/team_spend`).then(r => r.json()),
+      fetch(`http://localhost:8000/api/auction_summary`).then(r => r.json()),
+      fetch(`http://localhost:8000/api/role_distribution`).then(r => r.json()),
+      fetch(`http://localhost:8000/api/price_vs_performance`).then(r => r.json()),
+      fetch(`http://localhost:8000/api/players`).then(r => r.json()),
     ]).then(([ts, sm, rd, sc, pl]) => {
       setTeamSpend(ts)
       setSummary(sm)
