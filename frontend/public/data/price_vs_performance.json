@@ -1,0 +1,278 @@
+[
+  {
+    "name": "Abhishek Sharma",
+    "role": "Batter",
+    "price": 2.67,
+    "performance": 878.3
+  },
+  {
+    "name": "Alzarri Joseph",
+    "role": "Bowler",
+    "price": 3.49,
+    "performance": 2299.3
+  },
+  {
+    "name": "Arshdeep Singh",
+    "role": "Bowler",
+    "price": 1.82,
+    "performance": 2541.6
+  },
+  {
+    "name": "Axar Patel",
+    "role": "All-Rounder",
+    "price": 1.67,
+    "performance": 2262.5
+  },
+  {
+    "name": "Bhuvneshwar Kumar",
+    "role": "Bowler",
+    "price": 2.6,
+    "performance": 2320.4
+  },
+  {
+    "name": "Cameron Green",
+    "role": "All-Rounder",
+    "price": 3.52,
+    "performance": 1750.8
+  },
+  {
+    "name": "David Warner",
+    "role": "Batter",
+    "price": 2.77,
+    "performance": 1356.2
+  },
+  {
+    "name": "Faf du Plessis",
+    "role": "Batter",
+    "price": 1.32,
+    "performance": 891.3
+  },
+  {
+    "name": "Glenn Maxwell",
+    "role": "All-Rounder",
+    "price": 1.73,
+    "performance": 1716.7
+  },
+  {
+    "name": "Hardik Pandya",
+    "role": "All-Rounder",
+    "price": 5.47,
+    "performance": 2408.4
+  },
+  {
+    "name": "Harshal Patel",
+    "role": "Bowler",
+    "price": 0.87,
+    "performance": 2455.1
+  },
+  {
+    "name": "Jasprit Bumrah",
+    "role": "Bowler",
+    "price": 1.47,
+    "performance": 2553.7
+  },
+  {
+    "name": "Jos Buttler",
+    "role": "Batter",
+    "price": 13.28,
+    "performance": 1270.7
+  },
+  {
+    "name": "KL Rahul",
+    "role": "Batter",
+    "price": 11.89,
+    "performance": 1254.2
+  },
+  {
+    "name": "Kagiso Rabada",
+    "role": "Bowler",
+    "price": 9.91,
+    "performance": 2378.2
+  },
+  {
+    "name": "Kuldeep Yadav",
+    "role": "Bowler",
+    "price": 4.71,
+    "performance": 2625.5
+  },
+  {
+    "name": "Liam Livingstone",
+    "role": "All-Rounder",
+    "price": 2.72,
+    "performance": 1705.8
+  },
+  {
+    "name": "Lockie Ferguson",
+    "role": "Bowler",
+    "price": 6.38,
+    "performance": 2128.5
+  },
+  {
+    "name": "Marcus Stoinis",
+    "role": "All-Rounder",
+    "price": 1.62,
+    "performance": 1911.2
+  },
+  {
+    "name": "Mayank Yadav",
+    "role": "Bowler",
+    "price": 7.4,
+    "performance": 2371.1
+  },
+  {
+    "name": "Mitchell Marsh",
+    "role": "All-Rounder",
+    "price": 3.3,
+    "performance": 1782.5
+  },
+  {
+    "name": "Mitchell Starc",
+    "role": "Bowler",
+    "price": 0.94,
+    "performance": 2273.7
+  },
+  {
+    "name": "Mohammed Shami",
+    "role": "Bowler",
+    "price": 2.8,
+    "performance": 2552.5
+  },
+  {
+    "name": "Mohammed Siraj",
+    "role": "Bowler",
+    "price": 1.58,
+    "performance": 2526.6
+  },
+  {
+    "name": "Nitish Kumar Reddy",
+    "role": "All-Rounder",
+    "price": 2.19,
+    "performance": 1818.5
+  },
+  {
+    "name": "Noor Ahmad",
+    "role": "Bowler",
+    "price": 7.1,
+    "performance": 2363.9
+  },
+  {
+    "name": "Pat Cummins",
+    "role": "Bowler",
+    "price": 1.33,
+    "performance": 2733.6
+  },
+  {
+    "name": "Phil Salt",
+    "role": "Batter",
+    "price": 4.81,
+    "performance": 1015.6
+  },
+  {
+    "name": "R Ashwin",
+    "role": "Bowler",
+    "price": 2.9,
+    "performance": 2298.3
+  },
+  {
+    "name": "Rashid Khan",
+    "role": "Bowler",
+    "price": 14.07,
+    "performance": 2666.7
+  },
+  {
+    "name": "Ravindra Jadeja",
+    "role": "All-Rounder",
+    "price": 1.31,
+    "performance": 2162.0
+  },
+  {
+    "name": "Rishabh Pant",
+    "role": "WK-Batter",
+    "price": 9.85,
+    "performance": 1119.8
+  },
+  {
+    "name": "Rohit Sharma",
+    "role": "Batter",
+    "price": 3.64,
+    "performance": 1479.5
+  },
+  {
+    "name": "Ruturaj Gaikwad",
+    "role": "Batter",
+    "price": 1.94,
+    "performance": 844.5
+  },
+  {
+    "name": "Sam Curran",
+    "role": "All-Rounder",
+    "price": 4.75,
+    "performance": 2177.1
+  },
+  {
+    "name": "Sanju Samson",
+    "role": "WK-Batter",
+    "price": 6.13,
+    "performance": 803.8
+  },
+  {
+    "name": "Shubman Gill",
+    "role": "Batter",
+    "price": 5.24,
+    "performance": 952.3
+  },
+  {
+    "name": "Suryakumar Yadav",
+    "role": "Batter",
+    "price": 8.25,
+    "performance": 1196.1
+  },
+  {
+    "name": "Travis Head",
+    "role": "Batter",
+    "price": 6.41,
+    "performance": 1134.9
+  },
+  {
+    "name": "Trent Boult",
+    "role": "Bowler",
+    "price": 4.28,
+    "performance": 2519.3
+  },
+  {
+    "name": "Varun Chakaravarthy",
+    "role": "Bowler",
+    "price": 0.78,
+    "performance": 2670.7
+  },
+  {
+    "name": "Venkatesh Iyer",
+    "role": "All-Rounder",
+    "price": 2.03,
+    "performance": 1534.7
+  },
+  {
+    "name": "Virat Kohli",
+    "role": "Batter",
+    "price": 1.15,
+    "performance": 1411.7
+  },
+  {
+    "name": "Washington Sundar",
+    "role": "All-Rounder",
+    "price": 0.79,
+    "performance": 2091.4
+  },
+  {
+    "name": "Yashasvi Jaiswal",
+    "role": "Batter",
+    "price": 1.21,
+    "performance": 991.4
+  },
+  {
+    "name": "Yuzvendra Chahal",
+    "role": "Bowler",
+    "price": 6.27,
+    "performance": 2553.5
+  }
+]

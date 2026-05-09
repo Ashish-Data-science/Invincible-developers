@@ -1,0 +1,74 @@
+[
+  {
+    "team": "CSK",
+    "batters": 3.9,
+    "bowlers": 8.9,
+    "allrounders": 0.0,
+    "total": 12.8,
+    "playerCount": 4
+  },
+  {
+    "team": "DC",
+    "batters": 14.1,
+    "bowlers": 4.7,
+    "allrounders": 5.5,
+    "total": 24.3,
+    "playerCount": 8
+  },
+  {
+    "team": "GT",
+    "batters": 16.3,
+    "bowlers": 0.0,
+    "allrounders": 3.5,
+    "total": 19.8,
+    "playerCount": 4
+  },
+  {
+    "team": "KKR",
+    "batters": 0.0,
+    "bowlers": 23.2,
+    "allrounders": 2.5,
+    "total": 25.6,
+    "playerCount": 6
+  },
+  {
+    "team": "LSG",
+    "batters": 0.0,
+    "bowlers": 25.0,
+    "allrounders": 3.5,
+    "total": 28.5,
+    "playerCount": 5
+  },
+  {
+    "team": "MI",
+    "batters": 11.4,
+    "bowlers": 0.8,
+    "allrounders": 1.6,
+    "total": 13.8,
+    "playerCount": 4
+  },
+  {
+    "team": "PBKS",
+    "batters": 30.1,
+    "bowlers": 3.5,
+    "allrounders": 7.8,
+    "total": 41.4,
+    "playerCount": 8
+  },
+  {
+    "team": "RCB",
+    "batters": 0.0,
+    "bowlers": 4.1,
+    "allrounders": 0.0,
+    "total": 4.1,
+    "playerCount": 2
+  },
+  {
+    "team": "RR",
+    "batters": 4.8,
+    "bowlers": 10.6,
+    "allrounders": 6.8,
+    "total": 22.1,
+    "playerCount": 5
+  }
+]

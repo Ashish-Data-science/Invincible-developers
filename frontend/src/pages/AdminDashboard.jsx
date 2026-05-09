@@ -1,117 +1,195 @@
+import { useState, useEffect } from 'react'
 import Navbar from '../components/Navbar'
-import { Trophy, TrendingUp, Users, BarChart2 } from 'lucide-react'
+import { Trophy, TrendingUp, Users, BarChart2, IndianRupee, Target } from 'lucide-react'
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip,
-  ResponsiveContainer, Legend, LineChart, Line
+  ResponsiveContainer, Legend, PieChart, Pie, Cell,
+  ScatterChart, Scatter, ZAxis
 } from 'recharts'
-
-const spendData = [
-  { team: 'MI',  batters: 12.5, bowlers: 8.2, allrounders: 5.3 },
-  { team: 'CSK', batters: 11.0, bowlers: 9.5, allrounders: 6.0 },
-  { team: 'RCB', batters: 14.0, bowlers: 7.0, allrounders: 4.5 },
-  { team: 'KKR', batters: 10.0, bowlers: 10.0,allrounders: 7.0 },
-  { team: 'DC',  batters: 9.5,  bowlers: 8.8, allrounders: 5.5 },
-  { team: 'SRH', batters: 11.5, bowlers: 9.0, allrounders: 4.0 },
-]
-
-const winRateData = [
-  { season: '2019', MI: 72, CSK: 68, RCB: 45 },
-  { season: '2020', MI: 75, CSK: 58, RCB: 50 },
-  { season: '2021', MI: 62, CSK: 75, RCB: 55 },
-  { season: '2022', MI: 40, CSK: 52, RCB: 60 },
-  { season: '2023', MI: 55, CSK: 80, RCB: 62 },
-]
-
-const statCards = [
-  { icon: Trophy,     label: 'Teams Analysed',  value: '10' },
-  { icon: Users,      label: 'Players Tracked', value: '300+' },
-  { icon: TrendingUp, label: 'Auction Seasons',  value: '16' },
-  { icon: BarChart2,  label: 'Data Points',      value: '50K+' },
-]
 
 const ADMIN_LINKS = [
   { to: '/dashboard', label: 'Overview' },
-  { to: '/dashboard/teams', label: 'Teams' },
-  { to: '/dashboard/insights', label: 'Insights' },
 ]
 
+const ROLE_COLORS = {
+  'Batter': '#F9A825',
+  'Bowler': '#00D4FF',
+  'All-Rounder': '#A855F7',
+  'WK-Batter': '#10B981',
+}
+const PIE_COLORS = ['#F9A825', '#00D4FF', '#A855F7', '#10B981']
+
 export default function AdminDashboard() {
+  const [teamSpend, setTeamSpend]       = useState([])
+  const [summary, setSummary]           = useState({})
+  const [roleDist, setRoleDist]         = useState([])
+  const [scatter, setScatter]           = useState([])
+  const [players, setPlayers]           = useState([])
+
+  useEffect(() => {
+    const base = import.meta.env.BASE_URL
+    Promise.all([
+      fetch(`${base}data/team_spend.json`).then(r => r.json()),
+      fetch(`${base}data/auction_summary.json`).then(r => r.json()),
+      fetch(`${base}data/role_distribution.json`).then(r => r.json()),
+      fetch(`${base}data/price_vs_performance.json`).then(r => r.json()),
+      fetch(`${base}data/players.json`).then(r => r.json()),
+    ]).then(([ts, sm, rd, sc, pl]) => {
+      setTeamSpend(ts)
+      setSummary(sm)
+      setRoleDist(rd)
+      setScatter(sc)
+      setPlayers(pl)
+    }).catch(console.error)
+  }, [])
+
+  const topBatters = [...players].sort((a, b) => b.totalRuns - a.totalRuns).slice(0, 5)
+  const topBowlers = [...players].sort((a, b) => b.wickets - a.wickets).slice(0, 5)
+
+  const statCards = [
+    { icon: Users,        label: 'Players Auctioned', value: summary.totalPlayers || '—' },
+    { icon: Trophy,       label: 'Teams',             value: summary.totalTeams || '—' },
+    { icon: IndianRupee,  label: 'Total Spend (Cr)',  value: `₹${summary.totalSpend || 0}` },
+    { icon: Target,       label: 'Avg Price (Cr)',    value: `₹${summary.avgPrice || 0}` },
+    { icon: TrendingUp,   label: 'Max Price (Cr)',    value: `₹${summary.maxPrice || 0}` },
+    { icon: BarChart2,    label: 'Seasons Covered',   value: summary.seasons || 6 },
+  ]
+
   return (
     <div className="min-h-screen bg-ipl-dark">
       <Navbar links={ADMIN_LINKS} />
 
       {/* Hero */}
-      <section className="section text-center py-16">
+      <section className="section text-center py-14">
         <p className="text-ipl-accent text-xs font-semibold uppercase tracking-widest mb-3">Analytics Dashboard</p>
-        <h2 className="text-5xl md:text-6xl font-black gradient-text mb-4 leading-tight">
+        <h2 className="text-4xl md:text-5xl font-black gradient-text mb-4 leading-tight">
           Decode the Auction.<br />Win the Trophy.
         </h2>
-        <p className="text-white/60 max-w-2xl mx-auto">
-          Interactive visualisations revealing how IPL franchises spend their auction budgets — and which strategies lead to championships.
+        <p className="text-white/60 max-w-2xl mx-auto text-sm">
+          Data-driven insights from {summary.totalPlayers || '—'} players across {summary.totalTeams || '—'} franchises.
+          Powered by real ball-by-ball and auction data from IPL 2020–2025.
         </p>
       </section>
 
       {/* Stat cards */}
       <section className="section py-0">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
           {statCards.map(({ icon: Icon, label, value }) => (
-            <div key={label} className="glass-card p-5 flex flex-col items-center gap-2">
-              <Icon className="text-ipl-gold" size={26} />
-              <span className="text-3xl font-black">{value}</span>
-              <span className="text-white/50 text-sm">{label}</span>
+            <div key={label} className="glass-card p-4 flex flex-col items-center gap-1.5 text-center">
+              <Icon className="text-ipl-gold" size={22} />
+              <span className="text-2xl font-black">{value}</span>
+              <span className="text-white/40 text-xs">{label}</span>
             </div>
           ))}
         </div>
       </section>
 
-      {/* Charts */}
+      {/* Charts row 1 */}
       <section className="section grid md:grid-cols-2 gap-6">
-        {/* Spend by role */}
+        {/* Team spend */}
         <div className="glass-card p-6">
-          <h3 className="text-lg font-bold mb-1">Auction Spend by Role (₹ Cr)</h3>
-          <p className="text-white/40 text-xs mb-4">Budget allocation across player roles</p>
-          <ResponsiveContainer width="100%" height={260}>
-            <BarChart data={spendData}>
+          <h3 className="text-lg font-bold mb-1">Auction Spend by Team (₹ Cr)</h3>
+          <p className="text-white/40 text-xs mb-4">Budget allocation across player roles per franchise</p>
+          <ResponsiveContainer width="100%" height={280}>
+            <BarChart data={teamSpend}>
               <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" />
-              <XAxis dataKey="team" stroke="#ffffff60" tick={{ fill: '#ffffff80', fontSize: 12 }} />
-              <YAxis stroke="#ffffff60" tick={{ fill: '#ffffff80', fontSize: 12 }} />
+              <XAxis dataKey="team" stroke="#ffffff60" tick={{ fill: '#ffffff80', fontSize: 11 }} />
+              <YAxis stroke="#ffffff60" tick={{ fill: '#ffffff80', fontSize: 11 }} />
               <Tooltip contentStyle={{ backgroundColor: '#12122A', border: '1px solid #ffffff20', borderRadius: 8 }} labelStyle={{ color: '#F9A825', fontWeight: 700 }} />
-              <Legend wrapperStyle={{ color: '#ffffff60', fontSize: 12 }} />
-              <Bar dataKey="batters"     fill="#F9A825" radius={[3,3,0,0]} />
-              <Bar dataKey="bowlers"     fill="#00D4FF" radius={[3,3,0,0]} />
-              <Bar dataKey="allrounders" fill="#7C3AED" radius={[3,3,0,0]} />
+              <Legend wrapperStyle={{ color: '#ffffff60', fontSize: 11 }} />
+              <Bar dataKey="batters"     name="Batters"      fill="#F9A825" radius={[3,3,0,0]} />
+              <Bar dataKey="bowlers"     name="Bowlers"      fill="#00D4FF" radius={[3,3,0,0]} />
+              <Bar dataKey="allrounders" name="All-rounders" fill="#A855F7" radius={[3,3,0,0]} />
             </BarChart>
           </ResponsiveContainer>
         </div>
 
-        {/* Win rate trend */}
+        {/* Role distribution pie */}
         <div className="glass-card p-6">
-          <h3 className="text-lg font-bold mb-1">Win Rate Trend (%)</h3>
-          <p className="text-white/40 text-xs mb-4">Top franchise performance over seasons</p>
-          <ResponsiveContainer width="100%" height={260}>
-            <LineChart data={winRateData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" />
-              <XAxis dataKey="season" stroke="#ffffff60" tick={{ fill: '#ffffff80', fontSize: 12 }} />
-              <YAxis stroke="#ffffff60" tick={{ fill: '#ffffff80', fontSize: 12 }} />
-              <Tooltip contentStyle={{ backgroundColor: '#12122A', border: '1px solid #ffffff20', borderRadius: 8 }} labelStyle={{ color: '#F9A825', fontWeight: 700 }} />
-              <Legend wrapperStyle={{ color: '#ffffff60', fontSize: 12 }} />
-              <Line type="monotone" dataKey="MI"  stroke="#004BA0" strokeWidth={2} dot={{ r: 3 }} />
-              <Line type="monotone" dataKey="CSK" stroke="#F9CD05" strokeWidth={2} dot={{ r: 3 }} />
-              <Line type="monotone" dataKey="RCB" stroke="#EC1C24" strokeWidth={2} dot={{ r: 3 }} />
-            </LineChart>
+          <h3 className="text-lg font-bold mb-1">Role Distribution</h3>
+          <p className="text-white/40 text-xs mb-4">Number of players auctioned by role</p>
+          <ResponsiveContainer width="100%" height={280}>
+            <PieChart>
+              <Pie data={roleDist} dataKey="count" nameKey="role" cx="50%" cy="50%"
+                outerRadius={90} innerRadius={45} paddingAngle={4}
+                label={({ role, count }) => `${role}: ${count}`}
+              >
+                {roleDist.map((_, i) => <Cell key={i} fill={PIE_COLORS[i % PIE_COLORS.length]} />)}
+              </Pie>
+              <Tooltip contentStyle={{ backgroundColor: '#12122A', border: '1px solid #ffffff20', borderRadius: 8 }} />
+            </PieChart>
           </ResponsiveContainer>
         </div>
       </section>
 
-      {/* Key insights */}
+      {/* Charts row 2: Scatter */}
       <section className="section">
         <div className="glass-card p-6">
-          <h3 className="text-lg font-bold mb-4">🔍 Key Insights</h3>
+          <h3 className="text-lg font-bold mb-1">💰 Price vs Performance</h3>
+          <p className="text-white/40 text-xs mb-4">Are high-price players worth it? (hover for player names)</p>
+          <ResponsiveContainer width="100%" height={300}>
+            <ScatterChart>
+              <CartesianGrid strokeDasharray="3 3" stroke="#ffffff10" />
+              <XAxis dataKey="price" name="Price (₹Cr)" stroke="#ffffff60" tick={{ fill: '#ffffff80', fontSize: 11 }} />
+              <YAxis dataKey="performance" name="Performance Score" stroke="#ffffff60" tick={{ fill: '#ffffff80', fontSize: 11 }} />
+              <ZAxis range={[40, 120]} />
+              <Tooltip cursor={{ strokeDasharray: '3 3' }}
+                contentStyle={{ backgroundColor: '#12122A', border: '1px solid #ffffff20', borderRadius: 8 }}
+                formatter={(value, name) => [typeof value === 'number' ? value.toFixed(1) : value, name]}
+                labelFormatter={(_, payload) => payload?.[0]?.payload?.name || ''}
+              />
+              <Scatter data={scatter.filter(s => s.role === 'Batter' || s.role === 'WK-Batter')} fill="#F9A825" name="Batters" />
+              <Scatter data={scatter.filter(s => s.role === 'Bowler')} fill="#00D4FF" name="Bowlers" />
+              <Scatter data={scatter.filter(s => s.role === 'All-Rounder')} fill="#A855F7" name="All-rounders" />
+              <Legend wrapperStyle={{ color: '#ffffff60', fontSize: 11 }} />
+            </ScatterChart>
+          </ResponsiveContainer>
+        </div>
+      </section>
+
+      {/* Leaderboards */}
+      <section className="section grid md:grid-cols-2 gap-6">
+        <div className="glass-card p-6">
+          <h3 className="font-bold text-base mb-3">🏏 Top Run Scorers</h3>
+          <div className="space-y-2">
+            {topBatters.map((p, i) => (
+              <div key={p.name} className="flex items-center gap-3 bg-white/5 rounded-lg p-2.5">
+                <span className="text-ipl-gold font-black text-sm w-6">#{i+1}</span>
+                <div className="flex-1">
+                  <p className="text-sm font-semibold">{p.name}</p>
+                  <p className="text-xs text-white/40">{p.role} · SR: {p.strikeRate}</p>
+                </div>
+                <span className="text-ipl-gold font-bold">{p.totalRuns.toLocaleString()}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="glass-card p-6">
+          <h3 className="font-bold text-base mb-3">🎯 Top Wicket Takers</h3>
+          <div className="space-y-2">
+            {topBowlers.map((p, i) => (
+              <div key={p.name} className="flex items-center gap-3 bg-white/5 rounded-lg p-2.5">
+                <span className="text-ipl-accent font-black text-sm w-6">#{i+1}</span>
+                <div className="flex-1">
+                  <p className="text-sm font-semibold">{p.name}</p>
+                  <p className="text-xs text-white/40">{p.role} · Econ: {p.economy}</p>
+                </div>
+                <span className="text-ipl-accent font-bold">{p.wickets}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Insights */}
+      <section className="section">
+        <div className="glass-card p-6">
+          <h3 className="text-lg font-bold mb-4">🔍 Data Insights</h3>
           <div className="grid md:grid-cols-3 gap-4">
             {[
-              { title: 'Big-Batter Bias', desc: 'Teams spending >₹12Cr on batters average 65% win rate vs 48% for balanced squads.', color: 'border-ipl-gold' },
-              { title: 'Spin Wins Titles', desc: 'Champions in 4 of last 5 seasons had a premium spinner costing >₹8Cr.', color: 'border-ipl-accent' },
-              { title: 'Overseas Balance', desc: 'Optimal squads use exactly 4 overseas picks split 2 bat / 1 bowl / 1 WK.', color: 'border-purple-400' },
+              { title: 'Most Expensive Player', desc: `${summary.topBatter || '—'} commanded the highest bid of ₹${summary.maxPrice || 0} Cr`, color: 'border-ipl-gold' },
+              { title: 'Average Auction Price', desc: `Players were sold at an average of ₹${summary.avgPrice || 0} Cr across all roles`, color: 'border-ipl-accent' },
+              { title: 'Role Price Gaps', desc: roleDist.length > 0 ? `${roleDist[0]?.role} fetched an avg of ₹${roleDist[0]?.avgPrice} Cr vs ₹${roleDist[roleDist.length-1]?.avgPrice} Cr for ${roleDist[roleDist.length-1]?.role}` : '', color: 'border-purple-400' },
             ].map(i => (
               <div key={i.title} className={`border-l-4 ${i.color} pl-4 py-1`}>
                 <p className="font-bold text-sm mb-1">{i.title}</p>
@@ -124,7 +202,7 @@ export default function AdminDashboard() {
 
       <footer className="border-t border-white/10 mt-10">
         <div className="section py-5 text-center text-white/20 text-xs">
-          Built with React · Recharts · TailwindCSS · GitHub Pages
+          Built with React · Recharts · TailwindCSS · Python Data Pipeline
         </div>
       </footer>
     </div>

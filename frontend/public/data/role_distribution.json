@@ -1,0 +1,34 @@
+[
+  {
+    "role": "All-Rounder",
+    "count": 12,
+    "avgPrice": 2.59,
+    "maxPrice": 5.47,
+    "avgStrikeRate": 149.9,
+    "totalWickets": 1549
+  },
+  {
+    "role": "Batter",
+    "count": 13,
+    "avgPrice": 4.97,
+    "maxPrice": 13.28,
+    "avgStrikeRate": 178.4,
+    "totalWickets": 0
+  },
+  {
+    "role": "Bowler",
+    "count": 19,
+    "avgPrice": 4.25,
+    "maxPrice": 14.07,
+    "avgStrikeRate": 152.6,
+    "totalWickets": 3590
+  },
+  {
+    "role": "WK-Batter",
+    "count": 2,
+    "avgPrice": 7.99,
+    "maxPrice": 9.85,
+    "avgStrikeRate": 180.0,
+    "totalWickets": 0
+  }
+]
