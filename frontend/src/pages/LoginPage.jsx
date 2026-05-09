@@ -1,9 +1,15 @@
 import { useState } from 'react'
+import { Navigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { Shield, Building2, Eye, EyeOff, Trophy } from 'lucide-react'
 
 export default function LoginPage() {
-  const { loginAdmin, loginFranchise, franchises } = useAuth()
+  const { user, loginAdmin, loginFranchise, franchises } = useAuth()
+
+  // Redirect if already logged in
+  if (user) {
+    return <Navigate to={user.role === 'admin' ? '/dashboard' : '/franchise'} replace />
+  }
   const [tab, setTab] = useState('admin')          // 'admin' | 'franchise'
   const [form, setForm] = useState({ username: '', password: '', franchise: 'MI' })
   const [showPw, setShowPw] = useState(false)
