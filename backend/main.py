@@ -27,11 +27,11 @@ def process_data():
     # Load datasets
     base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     bbb_path = os.path.join(base_dir, "data_pipeline", "raw_data", "all_matches_ball_by_ball1.csv")
-    auction_path = os.path.join(base_dir, "data_pipeline", "raw_data", "ipl_auction_2025.csv")
+    auction_path = r"c:\PDF\IDP\dATASET\ipl_auction_2025_sold_players.xlsx"
 
     print("Loading datasets...")
     bbb_df = pd.read_csv(bbb_path)
-    auction_df = pd.read_csv(auction_path)
+    auction_df = pd.read_excel(auction_path)
 
     print("Processing Batting Stats...")
     batting_stats = bbb_df.groupby('batter').agg(
@@ -65,11 +65,35 @@ def process_data():
     player_stats['Player_Name'] = player_stats['batter'].fillna(player_stats['bowler'])
 
     # Clean Auction Data
-    auction_df['Sold_Price_Cr'] = pd.to_numeric(
-        auction_df['Winning Bid'].astype(str).str.replace(r'\D', '', regex=True)
-    ) / 10000000
+    if 'players_name' in auction_df.columns:
+        auction_df.rename(columns={'players_name': 'Player Name', 'team_name': 'Team'}, inplace=True)
+        
+    if 'winning_bid' in auction_df.columns:
+        auction_df['Sold_Price_Cr'] = pd.to_numeric(auction_df['winning_bid'], errors='coerce') / 10000000
+    else:
+        auction_df['Sold_Price_Cr'] = pd.to_numeric(
+            auction_df['Winning Bid'].astype(str).str.replace(r'\D', '', regex=True)
+        ) / 10000000
+
+    if 'Nationality' not in auction_df.columns:
+        auction_df['Nationality'] = 'India'
 
     master_df = pd.merge(player_stats, auction_df, left_on='Player_Name', right_on='Player Name', how='inner')
+
+    if 'Role' not in master_df.columns:
+        def infer_role(row):
+            w = row.get('Wickets', 0)
+            r = row.get('Total_Runs', 0)
+            if pd.isna(w) or w < 5: return 'Batter'
+            if pd.isna(r) or r < 100: return 'Bowler'
+            return 'All-Rounder'
+        master_df['Role'] = master_df.apply(infer_role, axis=1)
+        
+    role_map_dict = dict(zip(master_df['Player Name'], master_df['Role']))
+    auction_df['Role'] = auction_df['Player Name'].map(role_map_dict).fillna('Batter')
+
+    if 'Age' not in master_df.columns:
+        master_df['Age'] = 25
 
     final_dataset = master_df[['Player_Name', 'Role', 'Age', 'Total_Runs', 'Strike_Rate',
                                'Batting_Avg', 'Wickets', 'Economy', 'Sold_Price_Cr']].copy()
